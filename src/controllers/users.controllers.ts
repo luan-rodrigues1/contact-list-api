@@ -4,6 +4,7 @@ import createUserService from "../services/users/createUser.service";
 import deleteUserService from "../services/users/deleteUser.service";
 import infoUserService from "../services/users/infoUser.service";
 import updateUserService from "../services/users/updateUser.service";
+import uploadUserService from "../services/users/uploadUser.service";
 
 const createdUserController = async (req: Request, res: Response) => {
     const userData: ICreateUser = req.body
@@ -29,4 +30,10 @@ const deleteUserController = async (req: Request, res: Response) => {
     return res.status(204).json(deleteUserInfo)
 }
 
-export {createdUserController, updateUserController, infoUserController, deleteUserController}
+const uploadUserController = async (req: Request, res: Response) => {
+    const userId: string = req.user.id
+    const uploadImage = await uploadUserService(req.file, userId)
+    return res.status(200).json(uploadImage)
+}
+
+export {createdUserController, updateUserController, infoUserController, deleteUserController, uploadUserController}

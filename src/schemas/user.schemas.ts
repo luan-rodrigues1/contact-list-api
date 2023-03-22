@@ -26,7 +26,6 @@ const returnUserContactsSchema = returnUserSchema.extend({
     contacts: z.array(contactSchema)
 });
 
-
 const loginUserSchema = z.object({
     email: z.string().email(),
     password: z.string()
