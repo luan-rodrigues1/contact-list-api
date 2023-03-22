@@ -19,8 +19,8 @@ class User {
     @Column()
     password: string
 
-    @Column({nullable: true})
-    profile_picture?: string
+    @Column({type: "varchar", nullable: true})
+    profile_picture?: string | undefined | null
 
     @CreateDateColumn()
     created_at: Date

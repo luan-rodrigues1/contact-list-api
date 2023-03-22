@@ -9,8 +9,8 @@ class Contact {
     @Column({length: 50})
     name: string
 
-    @Column({length: 30, nullable: true})
-    description?: string
+    @Column({type: "varchar", length: 30, nullable: true})
+    description?: string | undefined | null
 
     @Column()
     email: string
@@ -18,8 +18,8 @@ class Contact {
     @Column()
     cell_phone: string
 
-    @Column({nullable: true})
-    profile_picture?: string
+    @Column({type: "varchar", nullable: true})
+    profile_picture?: string | undefined | null
 
     @CreateDateColumn()
     created_at: Date
