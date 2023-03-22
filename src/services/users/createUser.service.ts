@@ -1,11 +1,11 @@
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
-import { ICreateUser, IreturnUser } from "../../interfaces/users";
+import { ICreateUser, IReturnUser } from "../../interfaces/users";
 import { createUserSchema } from "../../schemas/user.schemas";
 import { returnUserSchema } from "../../schemas/user.schemas";
 
-const createUserService = async (payload: ICreateUser): Promise<IreturnUser> => {
+const createUserService = async (payload: ICreateUser): Promise<IReturnUser> => {
     const userRepo = AppDataSource.getRepository(User)
 
     const searchEmail =  await userRepo.findOne({

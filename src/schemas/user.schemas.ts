@@ -7,6 +7,8 @@ const createUserSchema = z.object({
     password: z.string()
 })
 
+const updateUserSchema = createUserSchema.partial()
+
 const returnUserSchema = z.object({
     id: z.string().uuid(),
     name: z.string().min(3).max(50),
@@ -19,4 +21,9 @@ const returnUserSchema = z.object({
     is_active: z.boolean(),
 })
 
-export {createUserSchema, returnUserSchema}
+const loginUserSchema = z.object({
+    email: z.string().email(),
+    password: z.string()
+})
+
+export {createUserSchema, returnUserSchema, updateUserSchema, loginUserSchema}
