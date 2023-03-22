@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { contactSchema } from "./contact.schema"
 
 const createUserSchema = z.object({
     name: z.string().min(3).max(50),
@@ -21,9 +22,14 @@ const returnUserSchema = z.object({
     is_active: z.boolean(),
 })
 
+const returnUserContactsSchema = returnUserSchema.extend({
+    contacts: z.array(contactSchema)
+});
+
+
 const loginUserSchema = z.object({
     email: z.string().email(),
     password: z.string()
 })
 
-export {createUserSchema, returnUserSchema, updateUserSchema, loginUserSchema}
+export {createUserSchema, returnUserSchema, updateUserSchema, loginUserSchema, returnUserContactsSchema}

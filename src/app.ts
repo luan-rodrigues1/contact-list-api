@@ -10,7 +10,6 @@ app.use(express.json())
 
 app.use("/users", userRoutes)
 app.use("/login", loginRoutes)
-
 app.use(errorHandler)
 
 export default app
