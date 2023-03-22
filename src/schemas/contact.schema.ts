@@ -14,5 +14,17 @@ const contactSchema = z.object({
   }),
 });
 
+const createContactSchema = contactSchema.omit({
+  id: true,
+  profile_picture: true,
+  created_at: true,
+  updated_at: true,
+  user: true
+})
 
-export {contactSchema}
+const returnContactSchema = contactSchema.omit({user: true})
+
+const updateContactSchema = createContactSchema.partial()
+
+
+export {contactSchema, createContactSchema, returnContactSchema, updateContactSchema}
