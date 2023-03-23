@@ -22,10 +22,6 @@ const returnUserSchema = z.object({
     is_active: z.boolean(),
 })
 
-// const returnUserContactsSchema = returnUserSchema.extend({
-//     contacts: z.array(contactSchema)
-// });
-
 const returnUserContactsSchema = returnUserSchema.extend({
     contacts: z.array(returnContactSchema)
 });
