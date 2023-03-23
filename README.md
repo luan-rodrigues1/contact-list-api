@@ -39,7 +39,7 @@ Diagrama ER da API definindo bem as relações entre as tabelas do banco de dado
 
 ## 3 - Comandos
 
-[ Voltar para o topo ](#todo-list-api)
+[ Voltar para o topo ](#contact-list-api)
 
  - Instalando Dependências
 
@@ -77,7 +77,7 @@ yarn typeorm migration:run -d src/data-source.ts
 
 ## 6. Endpoints
 
-[ Voltar para o topo ](#todo-list-api)
+[ Voltar para o topo ](#contact-list-api)
 
 ### Índice
 
