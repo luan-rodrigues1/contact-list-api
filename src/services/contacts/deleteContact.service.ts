@@ -2,21 +2,10 @@ import { AppDataSource } from "../../data-source"
 import { Contact } from "../../entities/contact.entity"
 import { AppError } from "../../errors"
 
-const deleteContactService = async (userId: string, contactId: string) => {
+const deleteContactService = async (contactId: string) => {
     const contactRepo = AppDataSource.getRepository(Contact)
     
-    const searchContact = await contactRepo.findOne({
-        where: {
-            id: contactId
-        },
-        relations: {
-            user: true
-        }
-    })
-
-    if (searchContact?.user.id !== userId) {
-        throw new AppError("missing permissions", 401)
-    }
+    const searchContact = await contactRepo.findOneBy({id: contactId})
 
     return await contactRepo.delete(searchContact!.id)
 }

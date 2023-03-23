@@ -25,19 +25,10 @@ const updateContactService = async (payload: IUpdateContact, userId: string ,con
         throw new AppError("There is already a user in your contacts with the same email and cell phone", 409)
     }
 
-
-    const updateContact = contactRepo.create({
-        ...searchContact,
-        ...payload
-
-    })
-
-    await contactRepo.save(updateContact)
-
     const queryBuilder = userRepo.createQueryBuilder("user")
     .where("user.email = :email AND user.cell_phone = :cellPhone", {
-      email: updateContact.email,
-      cellPhone: updateContact.cell_phone
+      email: payload.email,
+      cellPhone: payload.cell_phone
     })
     .select("user.profile_picture")
 
@@ -45,19 +36,31 @@ const updateContactService = async (payload: IUpdateContact, userId: string ,con
 
     if (existingUser) {
 
+        const newData = {...payload, ...existingUser}
+
         const updateContact = contactRepo.create({
             ...searchContact,
-            ...existingUser
+            ...newData
         })
     
         await contactRepo.save(updateContact)
         const contactReturn = returnContactSchema.parse(updateContact)
         return contactReturn
+
+    } else {
+        
+        const newData = {...payload, profile_picture: null}
+
+        const updateContact = contactRepo.create({
+            ...searchContact,
+            ...newData
+    
+        })
+
+        await contactRepo.save(updateContact)
+        const contactReturn = returnContactSchema.parse(updateContact)
+        return contactReturn
     }
-
-
-    const contactReturn = returnContactSchema.parse(updateContact)
-    return contactReturn
 
 }
 

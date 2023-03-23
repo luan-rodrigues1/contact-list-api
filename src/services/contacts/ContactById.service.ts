@@ -4,21 +4,10 @@ import { AppError } from "../../errors"
 import { IReturnContact } from "../../interfaces/contacts"
 import { returnContactSchema } from "../../schemas/contact.schema"
 
-const ContactByIdService = async (userId: string, contactId: string): Promise<IReturnContact> => {
+const ContactByIdService = async (contactId: string): Promise<IReturnContact> => {
     const contactRepo = AppDataSource.getRepository(Contact)
 
-    const searchContact = await contactRepo.findOne({
-        where: {
-            id: contactId
-        },
-        relations: {
-            user: true
-        }
-    })
-
-    if (searchContact?.user.id !== userId) {
-        throw new AppError("missing permissions", 401)
-    }
+    const searchContact = await contactRepo.findOneBy({id: contactId})
 
     const contactReturn = returnContactSchema.parse(searchContact)
 

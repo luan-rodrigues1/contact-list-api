@@ -13,9 +13,8 @@ const createContactController = async (req: Request, res: Response) => {
 }
 
 const ContactByIdController = async (req: Request, res: Response) => {
-    const userId: string = req.user.id 
     const contactId: string = req.params.id
-    const infoUser = await ContactByIdService(userId, contactId)
+    const infoUser = await ContactByIdService(contactId)
     return res.status(200).json(infoUser)
 }
 
@@ -28,9 +27,8 @@ const updateContactController = async (req: Request, res: Response) => {
 }
 
 const deleteContactController = async (req: Request, res: Response) => {
-    const userId: string = req.user.id 
     const contactId: string = req.params.id
-    const deleteUser = await deleteContactService(userId, contactId)
+    const deleteUser = await deleteContactService(contactId)
     return res.status(204).json(deleteUser)
 }
 
