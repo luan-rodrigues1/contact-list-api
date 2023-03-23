@@ -3,6 +3,7 @@ import { Contact } from "../../entities/contact.entity"
 import { User } from "../../entities/user.entity"
 import { AppError } from "../../errors"
 import { ICreateContact, IReturnContact } from "../../interfaces/contacts"
+import { returnContactSchema } from "../../schemas/contact.schema"
 
 
 const createContactService = async (payload: ICreateContact, userId: string): Promise<IReturnContact> => {
@@ -10,9 +11,10 @@ const createContactService = async (payload: ICreateContact, userId: string): Pr
     const userRepo = AppDataSource.getRepository(User)
 
     const queryBuilderContact = contactRepo.createQueryBuilder("contact")
-    .where("contact.email = :email AND contact.cell_phone = :cellPhone", {
+    .where("contact.email = :email AND contact.cell_phone = :cellPhone AND contact.userId = :userIdLogged", {
       email: payload.email,
-      cellPhone: payload.cell_phone
+      cellPhone: payload.cell_phone,
+      userIdLogged: userId
     })
     .select("contact.id")
 
@@ -46,7 +48,8 @@ const createContactService = async (payload: ICreateContact, userId: string): Pr
                 user: searchUser!
             }
         )
-        return contact
+        const contactReturn = returnContactSchema.parse(contact)
+        return contactReturn
     } else {
         const contact = contactRepo.create(payload)
         await contactRepo.save(contact)
@@ -58,7 +61,8 @@ const createContactService = async (payload: ICreateContact, userId: string): Pr
                 user: searchUser!
             }
         )
-        return contact
+        const contactReturn = returnContactSchema.parse(contact)
+        return contactReturn
     }
 
 }

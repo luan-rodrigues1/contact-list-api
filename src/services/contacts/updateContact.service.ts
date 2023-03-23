@@ -12,9 +12,10 @@ const updateContactService = async (payload: IUpdateContact, userId: string ,con
     const searchContact = await contactRepo.findOneBy({id: contactId})
 
     const queryBuilderContact = contactRepo.createQueryBuilder("contact")
-    .where("contact.email = :email AND contact.cell_phone = :cellPhone", {
+    .where("contact.email = :email AND contact.cell_phone = :cellPhone AND contact.userId = :userIdLogged", {
       email: payload.email,
-      cellPhone: payload.cell_phone
+      cellPhone: payload.cell_phone,
+      userIdLogged: userId
     })
     .select("contact.id")
 

@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { contactSchema } from "./contact.schema"
+import { contactSchema, returnContactSchema } from "./contact.schema"
 
 const createUserSchema = z.object({
     name: z.string().min(3).max(50),
@@ -22,8 +22,12 @@ const returnUserSchema = z.object({
     is_active: z.boolean(),
 })
 
+// const returnUserContactsSchema = returnUserSchema.extend({
+//     contacts: z.array(contactSchema)
+// });
+
 const returnUserContactsSchema = returnUserSchema.extend({
-    contacts: z.array(contactSchema)
+    contacts: z.array(returnContactSchema)
 });
 
 const loginUserSchema = z.object({
