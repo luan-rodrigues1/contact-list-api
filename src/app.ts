@@ -4,6 +4,7 @@ import express, {Application}  from "express";
 import { errorHandler } from "./errors"
 import userRoutes from "./routers/users.routes";
 import loginRoutes from "./routers/login.routes";
+import contactRoutes from "./routers/contacts.routes";
 import cors from "cors"
 
 const app: Application = express()
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 app.use("/files", express.static("src/uploads"))
 app.use("/users", userRoutes)
 app.use("/login", loginRoutes)
+app.use("/contacts", contactRoutes)
 app.use(errorHandler)
 
 export default app

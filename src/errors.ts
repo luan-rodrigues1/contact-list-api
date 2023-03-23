@@ -11,7 +11,6 @@ class AppError extends Error {
 
 const errorHandler = (error: any, req: Request, res: Response, _: NextFunction) =>{
     if(error instanceof AppError){
-        console.log("chegou aqui")
         return res.status(error.statusCode).json({message: error.message})
     }
 
