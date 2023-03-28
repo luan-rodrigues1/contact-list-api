@@ -97,3 +97,357 @@ yarn typeorm migration:run -d src/data-source.ts
     - [DELETE - /contacts/:contact_id]
 
 ---
+
+## 7. Documentação
+
+### **Criação de Usuário**
+### `/users`
+
+### Exemplo de Request:
+```
+POST /users
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+{
+	"name": "Luan rodrigues",
+	"email": "luan_rodrigues1@mail.com",
+	"cell_phone": "21 981528060",
+	"password": "1234"
+}
+```
+
+### Exemplo de Response:
+```
+201 Created
+```
+
+```json
+{
+	"id": "b6caa420-9857-402d-b6dd-2bc45456506c",
+	"name": "Luan rodrigues",
+	"email": "luan_rodrigues1@mail.com",
+	"cell_phone": "21 981528060",
+	"profile_picture": null,
+	"created_at": "2023-03-28T00:25:54.972Z",
+	"updated_at": "2023-03-28T00:25:54.972Z",
+	"deleted_at": null,
+	"is_active": true
+}
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 409 Conflict   | E-mail already registered |
+| 409 Conflict   | Cell phone already registered |
+
+---
+
+### **Listar informações do usuário logado**
+### `/users`
+
+### Exemplo de Request:
+```
+GET /users
+Authorization: Bearer {token}
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+
+```json
+{
+	"id": "b6caa420-9857-402d-b6dd-2bc45456506c",
+	"name": "Luan rodrigues",
+	"email": "luan_rodrigues1@mail.com",
+	"cell_phone": "21 981528060",
+	"profile_picture": null,
+	"created_at": "2023-03-28T00:25:54.972Z",
+	"updated_at": "2023-03-28T00:25:54.972Z",
+	"deleted_at": null,
+	"is_active": true,
+	"contacts": []
+}
+```
+
+### Observações:
+Na requisição apenas é necessário o TOKEN, a aplicação ficará responsável em buscar o id do usuário no token e retorna ele.
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 401 Unauthorized   | Invalid Token |
+
+---
+
+### **Atualização de Usuário**
+### `/users`
+
+### Exemplo de Request:
+```
+PATCH /users
+Authorization: Bearer {token}
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+{
+	"name": "Luan rodrigues carlos",
+	"email": "luan_rodrigues_carlos1@mail.com",
+	"password": "12345"
+}
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+
+```json
+{
+	"id": "b6caa420-9857-402d-b6dd-2bc45456506c",
+	"name": "Luan rodrigues carlos",
+	"email": "luan_rodrigues_carlos1@mail.com",
+	"cell_phone": "21 981528060",
+	"profile_picture": null,
+	"created_at": "2023-03-28T00:25:54.972Z",
+	"updated_at": "2023-03-28T00:39:43.170Z",
+	"deleted_at": null,
+	"is_active": true
+}
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 401 Unauthorized   | Invalid Token |
+| 409 Conflict   | A user with this email already exists |
+
+---
+
+### **Deletar Usuário**
+### `/users`
+
+### Exemplo de Request:
+```
+DELETE /users
+Authorization: Bearer {token}
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+204 No Content
+```
+
+```json
+Nenhuma informação é retornada nessa requisição
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 401 Unauthorized   | Invalid Token |
+
+---
+
+### **Atualização da foto de perfil**
+### `/users/upload`
+
+### Exemplo de Request:
+```
+PATCH /users/upload
+Authorization: Bearer {token}
+Content-type: Multipart Form
+```
+
+### Corpo da Requisição:
+```Multipart Form
+avatar: <Arquivo de imagem>
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+
+```json
+{
+	"id": "b6caa420-9857-402d-b6dd-2bc45456506c",
+	"name": "Luan rodrigues carlos",
+	"email": "luan_rodrigues_carlos1@mail.com",
+	"cell_phone": "21 981528060",
+	"profile_picture": "1679964752241_perfil.jpeg",
+	"created_at": "2023-03-28T00:25:54.972Z",
+	"updated_at": "2023-03-28T00:52:32.323Z",
+	"deleted_at": null,
+	"is_active": true
+}
+```
+### Observações:
+Só é possível enviar arquivo de imagem do tipo jpeg, pjpeg e png, caso seja passado outro tipo de arquivo a requisição irá retornar erro 400
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 400 Bad Request   | Invalid file type |
+| 400 Bad Request   | No files have been uploaded |
+| 401 Unauthorized   | Invalid Token |
+
+---
+
+### **Login de Usuário**
+### `/login`
+
+### Exemplo de Request:
+```
+POST /login
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+{
+	"email": "luanRodrigues@mail.com",
+	"password": "1234"
+}
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ImYzNTkzZDc3LWQyNDEtNGU5MS04OGFjLWMyYzZkN2VjOTYxNyIsImlhdCI6MTY3NzcwODk0OCwiZXhwIjoxNjc3Nzk1MzQ4LCJzdWIiOiJmMzU5M2Q3Ny1kMjQxLTRlOTEtODhhYy1jMmM2ZDdlYzk2MTcifQ.DS4tXxU-gb1Ksp4zrxljvwYoo8rtRvcORaGbI18dbag"
+}
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 400 Bad Request | user no actived |
+| 403 Forbiden | user or password invalid |
+
+---
+
+### **Criar Contato**
+### `/contacts`
+
+### Exemplo de Request:
+```
+POST /contacts
+Authorization: Bearer {token}
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+{
+	"name": "Lucas silva",
+	"email": "lucas_csilva@mail.com",
+	"cell_phone": "21 981528073",
+	"description": "Dentista"
+}
+```
+
+### Exemplo de Response:
+```
+201 Created
+```
+
+```json
+{
+	"id": "b41579a7-3841-4ca3-83ac-8bfd6d82af6b",
+	"name": "Lucas silva",
+	"description": "Dentista",
+	"email": "lucas_csilva@mail.com",
+	"cell_phone": "21 981528073",
+	"profile_picture": null,
+	"created_at": "2023-03-28T01:13:04.154Z",
+	"updated_at": "2023-03-28T01:13:04.154Z"
+}
+```
+
+### Observações:
+Caso o E-mail e Telefone do contato que está sendo criado seja o mesmo de algum usuário cadastrado na aplicação, a foto de perfil dele será adicionado no campo “profile_picture” caso o usuário tenha foto em seus dados
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 409 Conflict   | There is already a user in your contacts with the same email and cell phone |
+| 401 Unauthorized   | Invalid Token |
+
+---
+
+### **Listar todos os contatos do usuário**
+### `/contacts`
+
+### Exemplo de Request:
+```
+GET /contacts
+Authorization: Bearer {token}
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+
+```json
+[
+	{
+		"id": "b41579a7-3841-4ca3-83ac-8bfd6d82af6b",
+		"name": "Lucas silva",
+		"description": "Dentista",
+		"email": "lucas_csilva@mail.com",
+		"cell_phone": "21 981528073",
+		"profile_picture": null,
+		"created_at": "2023-03-28T01:13:04.154Z",
+		"updated_at": "2023-03-28T01:13:04.171Z"
+	},
+	{
+		"id": "891d604e-5a1c-444d-84db-37eb22b7b91b",
+		"name": "Levi carlos",
+		"description": "Primo",
+		"email": "levi_carlos@mail.com",
+		"cell_phone": "21 981528072",
+		"profile_picture": null,
+		"created_at": "2023-03-28T01:06:28.378Z",
+		"updated_at": "2023-03-28T01:06:28.396Z"
+	}
+]
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 401 Unauthorized   | Invalid Token |
+
+---
