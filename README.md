@@ -10,6 +10,7 @@ API desenvolvida para auxiliar na organização de suas tarefas diárias
 - [Variáveis de Ambiente](#4---vari%C3%A1veis-de-ambiente)
 - [Migrations](#5---migrations)
 - [Endpoints](#6-endpoints)
+- [Documentação](#7-documenta%C3%A7%C3%A3o)
 
 ---
 
@@ -82,19 +83,19 @@ yarn typeorm migration:run -d src/data-source.ts
 ### Índice
 
 - [Users]
-    - [POST - /users]
-    - [GET - /users]
-    - [PATCH - /users]
-    - [DELETE - /users]
-    - [PATCH - /users/upload]
+    - [POST - /users](#cria%C3%A7%C3%A3o-de-usu%C3%A1rio)
+    - [GET - /users](#listar-informa%C3%A7%C3%B5es-do-usu%C3%A1rio-logado)
+    - [PATCH - /users](#atualiza%C3%A7%C3%A3o-de-usu%C3%A1rio)
+    - [DELETE - /users](#deletar-usu%C3%A1rio)
+    - [PATCH - /users/upload](#atualiza%C3%A7%C3%A3o-da-foto-de-perfil)
 - [Login]
-    - [POST - /login]
-- [Contacts](#criar-tarefas)
-    - [POST - /contacts]
-    - [GET - /contacts]
-    - [GET - /contacts/:contact_id]
-    - [PATCH - /contacts/:contact_id]
-    - [DELETE - /contacts/:contact_id]
+    - [POST - /login](#login-de-usu%C3%A1rio)
+- [Contacts]
+    - [POST - /contacts](#criar-contato)
+    - [GET - /contacts](#listar-todos-os-contatos-do-usu%C3%A1rio)
+    - [GET - /contacts/:contact_id](#listar-um-contato-pelo-id)
+    - [PATCH - /contacts/:contact_id](#atualizar-contato)
+    - [DELETE - /contacts/:contact_id](#deletar-contato)
 
 ---
 
@@ -390,7 +391,7 @@ Content-type: application/json
 ```
 
 ### Observações:
-Caso o E-mail e Telefone do contato que está sendo criado seja o mesmo de algum usuário cadastrado na aplicação, a foto de perfil dele será adicionado no campo “profile_picture” caso o usuário tenha foto em seus dados
+Caso o E-mail e Telefone do contato que está sendo criado seja o mesmo de algum usuário cadastrado na aplicação, a foto de perfil dele será adicionado no campo “profile_picture”, isso caso o usuário tenha foto em seus dados
 
 ### Possíveis Erros:
 | Código do Erro | Descrição |
@@ -449,5 +450,131 @@ Vazio
 | Código do Erro | Descrição |
 |----------------|-----------|
 | 401 Unauthorized   | Invalid Token |
+
+---
+
+### **Listar um contato pelo id**
+### `/contacts/{id do contato}`
+
+### Exemplo de Request:
+```
+GET /contacts/b41579a7-3841-4ca3-83ac-8bfd6d82af6b
+Authorization: Bearer {token}
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+
+```json
+{
+	"id": "b41579a7-3841-4ca3-83ac-8bfd6d82af6b",
+	"name": "Lucas silva",
+	"description": "Dentista",
+	"email": "lucas_csilva@mail.com",
+	"cell_phone": "21 981528073",
+	"profile_picture": null,
+	"created_at": "2023-03-28T01:13:04.154Z",
+	"updated_at": "2023-03-28T01:13:04.171Z"
+}
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 401 Unauthorized   | Invalid Token |
+| 401 Unauthorized   | missing permissions |
+| 404 Unauthorized   | Contact not found |
+
+---
+
+### **Atualizar Contato**
+### `/contacts/{id do contato}`
+
+### Exemplo de Request:
+```
+PATCH /contacts/b41579a7-3841-4ca3-83ac-8bfd6d82af6b
+Authorization: Bearer {token}
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+{
+	"name": "Dr Lucas Silva",
+	"email": "luanteste9@mail.com",
+	"cell_phone": "21 981528074",
+	"description": "Médico"
+}
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+
+```json
+{
+	"id": "b41579a7-3841-4ca3-83ac-8bfd6d82af6b",
+	"name": "Dr Lucas Silva",
+	"description": "Médico",
+	"email": "luanteste9@mail.com",
+	"cell_phone": "21 981528074",
+	"profile_picture": null,
+	"created_at": "2023-03-28T01:13:04.154Z",
+	"updated_at": "2023-03-28T12:44:22.243Z"
+}
+```
+
+### Observações:
+Só é possível alterar as propiedades "name", "email", "cell_phone" e "description", caso seja passado outro valor será ignorado
+
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 401 Unauthorized   | Invalid Token |
+| 401 Unauthorized   | missing permissions |
+| 404 Unauthorized   | Contact not found |
+
+---
+
+### **Deletar Contato**
+### `/contacts/{id do contato}`
+
+### Exemplo de Request:
+```
+DELETE /contacts/b41579a7-3841-4ca3-83ac-8bfd6d82af6b
+Authorization: Bearer {token}
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+204 No Content
+```
+
+```json
+Nenhuma informação é retornada nessa requisição
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 401 Unauthorized   | Invalid Token |
+| 401 Unauthorized   | missing permissions |
+| 404 Unauthorized   | Contact not found |
 
 ---
