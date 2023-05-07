@@ -5,62 +5,49 @@ import { AppError } from "../../errors"
 import { IUpdateContact } from "../../interfaces/contacts"
 import { returnContactSchema } from "../../schemas/contact.schema"
 
-const updateContactService = async (payload: IUpdateContact, userId: string ,contactId: string) => {
+const updateContactService = async (payload: IUpdateContact, contactId: string) => {
     const contactRepo = AppDataSource.getRepository(Contact)
     const userRepo = AppDataSource.getRepository(User)
 
     const searchContact = await contactRepo.findOneBy({id: contactId})
 
-    const queryBuilderContact = contactRepo.createQueryBuilder("contact")
-    .where("contact.email = :email AND contact.cell_phone = :cellPhone AND contact.userId = :userIdLogged", {
-      email: payload.email,
-      cellPhone: payload.cell_phone,
-      userIdLogged: userId
-    })
-    .select("contact.id")
+    if (payload.email) {
+        const duplicateEmail = await contactRepo.findOneBy({email: payload.email})
 
-    const existingContact = await queryBuilderContact.getOne()
+        if (searchContact?.email !== duplicateEmail?.email && duplicateEmail) {
+            throw new AppError("There is already a contact with this email", 409)
+        }
 
-    if (existingContact && (searchContact?.email !== payload.email && searchContact?.cell_phone !== payload.cell_phone)){
-        throw new AppError("There is already a user in your contacts with the same email and cell phone", 409)
     }
 
-    const queryBuilder = userRepo.createQueryBuilder("user")
-    .where("user.email = :email AND user.cell_phone = :cellPhone", {
-      email: payload.email,
-      cellPhone: payload.cell_phone
-    })
-    .select("user.profile_picture")
+    if (payload.cell_phone) {
+        const duplicateCellPhone = await contactRepo.findOneBy({cell_phone: payload.cell_phone})
 
-    const existingUser = await queryBuilder.getOne()
+        if (searchContact?.email !== duplicateCellPhone?.email && duplicateCellPhone) {
+            throw new AppError("There is already a contact with this cell phone", 409)
+        }
 
-    if (existingUser) {
-
-        const newData = {...payload, ...existingUser}
-
-        const updateContact = contactRepo.create({
-            ...searchContact,
-            ...newData
-        })
-    
-        await contactRepo.save(updateContact)
-        const contactReturn = returnContactSchema.parse(updateContact)
-        return contactReturn
-
-    } else {
-        
-        const newData = {...payload, profile_picture: null}
-
-        const updateContact = contactRepo.create({
-            ...searchContact,
-            ...newData
-    
-        })
-
-        await contactRepo.save(updateContact)
-        const contactReturn = returnContactSchema.parse(updateContact)
-        return contactReturn
     }
+
+    await contactRepo.update(contactId, {...payload})
+
+    const contactUpdate = await contactRepo.findOneBy({id: contactId})
+
+    const registeredUserEmail = await userRepo.findOneBy({email: contactUpdate?.email!})
+    const registeredUserPhone = await userRepo.findOneBy({cell_phone: contactUpdate?.cell_phone!})
+
+    if (registeredUserEmail?.id === registeredUserPhone?.id) {
+        await contactRepo.update(contactId, {profile_picture: registeredUserEmail?.profile_picture})
+
+        const contactUpdatePhoto = await contactRepo.findOneBy({id: contactId})
+        const contactValidation = returnContactSchema.parse(contactUpdatePhoto)
+
+        return contactValidation
+    }
+
+    const contactValidation = returnContactSchema.parse(contactUpdate)
+
+    return contactValidation
 
 }
 
