@@ -2,10 +2,10 @@ import { AppDataSource } from "../../data-source"
 import { Contact } from "../../entities/contact.entity"
 import { User } from "../../entities/user.entity"
 import { AppError } from "../../errors"
-import { IUpdateContact } from "../../interfaces/contacts"
+import { IReturnContact, IUpdateContact } from "../../interfaces/contacts"
 import { returnContactSchema } from "../../schemas/contact.schema"
 
-const updateContactService = async (payload: IUpdateContact, contactId: string) => {
+const updateContactService = async (payload: IUpdateContact, contactId: string): Promise<IReturnContact> => {
     const contactRepo = AppDataSource.getRepository(Contact)
     const userRepo = AppDataSource.getRepository(User)
 
