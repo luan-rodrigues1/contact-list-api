@@ -27,8 +27,8 @@ const ContactByIdController = async (req: Request, res: Response) => {
 
 const updateContactController = async (req: Request, res: Response) => {
     const contactData: IUpdateContact = req.body
-    const userId: string = req.user.id 
     const contactId: string = req.params.id
+    const userId: string = req.user.id 
     const updateContact = await updateContactService(contactData, userId, contactId)
     return res.status(200).json(updateContact)
 }
