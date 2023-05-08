@@ -45,7 +45,9 @@ const updateContactService = async (payload: IUpdateContact, userId: string, con
         return contactValidation
     }
 
-    const contactValidation = returnContactSchema.parse(contactUpdate)
+    await contactRepo.update(contactId, {profile_picture: null})
+    const UpdateNoImage = await contactRepo.findOneBy({id: contactId})
+    const contactValidation = returnContactSchema.parse(UpdateNoImage)
 
     return contactValidation
 
