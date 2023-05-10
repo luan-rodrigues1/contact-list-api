@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { contactSchema, returnContactSchema } from "./contact.schema"
+import { hashSync } from "bcryptjs"
 
 const createUserSchema = z.object({
     name: z.string().min(3).max(50),

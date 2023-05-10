@@ -1,3 +1,4 @@
+import { hashSync } from "bcryptjs";
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
@@ -29,9 +30,13 @@ const updateUserService = async (payload: IUpdateUser, userId: string): Promise<
             withDeleted: true
         });
 
-        if(searchCellPhone && searchUser?.cell_phone !== searchCellPhone?.email){
+        if(searchCellPhone && searchUser?.cell_phone !== searchCellPhone?.cell_phone){
             throw new AppError("A user with this cell Phone already exists", 409)
         }
+    }
+
+    if (payload.password) {
+        payload.password = hashSync(payload.password, 10)
     }
 
     const updateUser = userRepo.create({
