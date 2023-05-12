@@ -4,7 +4,7 @@ import { createUserSchema, returnUserSchema, loginUserSchema, returnUserContacts
 
 type ICreateUser = z.infer<typeof createUserSchema>
 type IReturnUser = z.infer<typeof returnUserSchema>
-type IUpdateUser = DeepPartial<ICreateUser>
+type IUpdateUser = DeepPartial<Omit<ICreateUser, 'password'>>
 type ILoginUser = z.infer<typeof loginUserSchema>
 type IInfoUser = z.infer<typeof returnUserContactsSchema>
 

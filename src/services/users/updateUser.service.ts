@@ -3,11 +3,13 @@ import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
 import { IReturnUser, IUpdateUser } from "../../interfaces/users";
-import { returnUserSchema } from "../../schemas/user.schemas";
+import { returnUserSchema, updateUserSchema } from "../../schemas/user.schemas";
 
 const updateUserService = async (payload: IUpdateUser, userId: string): Promise<IReturnUser> => {
     const userRepo = AppDataSource.getRepository(User)    
     const searchUser =  await userRepo.findOneBy({ id: userId });
+
+    console.log(payload)
 
     if(payload.email){
         const searchEmail =  await userRepo.findOne({
@@ -35,16 +37,13 @@ const updateUserService = async (payload: IUpdateUser, userId: string): Promise<
         }
     }
 
-    if (payload.password) {
-        payload.password = hashSync(payload.password, 10)
-    }
-
     const updateUser = userRepo.create({
         ...searchUser,
         ...payload
     })
 
     await userRepo.save(updateUser)
+
 
     const userWithoutPassword = returnUserSchema.parse(updateUser)
 
