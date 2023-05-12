@@ -16,6 +16,8 @@ const listUsercontactsService = async (userId: string, queryParameters: any) => 
         )
     }
 
+    query = query.orderBy('contact.created_at', 'DESC');
+
     const listContact = await query.getMany();
 
     return listContact

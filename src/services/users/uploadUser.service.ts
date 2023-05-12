@@ -12,7 +12,6 @@ const uploadUserService = async (image: Express.Multer.File | undefined, userId:
     const userRepo = AppDataSource.getRepository(User)    
     const searchUser =  await userRepo.findOneBy({ id: userId });
 
-    console.log(searchUser)
 
     const newProfilePicture = {
         profile_picture: image.filename
