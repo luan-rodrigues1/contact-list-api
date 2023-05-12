@@ -9,7 +9,6 @@ const updateUserService = async (payload: IUpdateUser, userId: string): Promise<
     const userRepo = AppDataSource.getRepository(User)    
     const searchUser =  await userRepo.findOneBy({ id: userId });
 
-    console.log(payload)
 
     if(payload.email){
         const searchEmail =  await userRepo.findOne({

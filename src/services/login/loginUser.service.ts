@@ -41,8 +41,6 @@ const loginUserService = async (payload: ILoginUser): Promise<string> => {
         }
     )
 
-    console.log(token)
-
     return token
     
 }
