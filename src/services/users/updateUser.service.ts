@@ -1,12 +1,15 @@
+import { hashSync } from "bcryptjs";
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
 import { IReturnUser, IUpdateUser } from "../../interfaces/users";
-import { returnUserSchema } from "../../schemas/user.schemas";
+import { returnUserSchema, updateUserSchema } from "../../schemas/user.schemas";
 
 const updateUserService = async (payload: IUpdateUser, userId: string): Promise<IReturnUser> => {
     const userRepo = AppDataSource.getRepository(User)    
     const searchUser =  await userRepo.findOneBy({ id: userId });
+
+    console.log(payload)
 
     if(payload.email){
         const searchEmail =  await userRepo.findOne({
@@ -29,7 +32,7 @@ const updateUserService = async (payload: IUpdateUser, userId: string): Promise<
             withDeleted: true
         });
 
-        if(searchCellPhone && searchUser?.cell_phone !== searchCellPhone?.email){
+        if(searchCellPhone && searchUser?.cell_phone !== searchCellPhone?.cell_phone){
             throw new AppError("A user with this cell Phone already exists", 409)
         }
     }
@@ -40,6 +43,7 @@ const updateUserService = async (payload: IUpdateUser, userId: string): Promise<
     })
 
     await userRepo.save(updateUser)
+
 
     const userWithoutPassword = returnUserSchema.parse(updateUser)
 
