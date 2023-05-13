@@ -5,6 +5,7 @@ import createContactService from "../services/contacts/createContact.service";
 import deleteContactService from "../services/contacts/deleteContact.service";
 import listUsercontactsService from "../services/contacts/listUsercontacts.service";
 import updateContactService from "../services/contacts/updateContact.service";
+import { object } from "zod";
 
 const createContactController = async (req: Request, res: Response) => {
     const contactData: ICreateContact = req.body
@@ -15,7 +16,9 @@ const createContactController = async (req: Request, res: Response) => {
 
 const listUsercontactsController = async (req: Request, res: Response) => {
     const userId: string = req.user.id 
-    const listContact = await listUsercontactsService(userId)
+    const queryFilter = req.query
+    
+    const listContact = await listUsercontactsService(userId, queryFilter)
     return res.status(200).json(listContact)
 }
 
@@ -27,8 +30,8 @@ const ContactByIdController = async (req: Request, res: Response) => {
 
 const updateContactController = async (req: Request, res: Response) => {
     const contactData: IUpdateContact = req.body
-    const userId: string = req.user.id 
     const contactId: string = req.params.id
+    const userId: string = req.user.id 
     const updateContact = await updateContactService(contactData, userId, contactId)
     return res.status(200).json(updateContact)
 }

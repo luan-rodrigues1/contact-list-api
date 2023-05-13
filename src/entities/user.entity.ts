@@ -37,7 +37,6 @@ class User {
     @OneToMany(() => Contact, contact => contact.user)
     contacts: Contact[]
 
-    @BeforeUpdate()
     @BeforeInsert()
     hasPassword(){
         this.password = hashSync(this.password, 10)

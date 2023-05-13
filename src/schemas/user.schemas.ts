@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { contactSchema, returnContactSchema } from "./contact.schema"
+import { hashSync } from "bcryptjs"
 
 const createUserSchema = z.object({
     name: z.string().min(3).max(50),
@@ -8,7 +9,7 @@ const createUserSchema = z.object({
     password: z.string()
 })
 
-const updateUserSchema = createUserSchema.partial()
+const updateUserSchema = createUserSchema.omit({password: true}).partial()
 
 const returnUserSchema = z.object({
     id: z.string().uuid(),

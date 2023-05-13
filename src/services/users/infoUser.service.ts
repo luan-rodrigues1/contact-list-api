@@ -7,16 +7,13 @@ import { returnUserContactsSchema } from "../../schemas/user.schemas"
 const infoUserService = async (payload: string): Promise<IInfoUser> => {
     const userRepo = AppDataSource.getRepository(User)
 
-    const searchUser =  await userRepo.findOne({
-        where: {
-            id: payload
-        },
-        relations: {
-            contacts: true
-        }
-    })
-
-    const userWithoutPassword = returnUserContactsSchema.parse(searchUser)
+    const contacts = await userRepo.createQueryBuilder('user')
+    .leftJoinAndSelect('user.contacts', 'contact')
+    .where('user.id = :userId', { userId: payload })
+    .orderBy('contact.created_at', 'DESC')
+    .getOneOrFail()
+    
+    const userWithoutPassword = returnUserContactsSchema.parse(contacts)
     
     return userWithoutPassword
 }
