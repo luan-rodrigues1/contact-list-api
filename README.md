@@ -92,7 +92,7 @@ yarn typeorm migration:run -d src/data-source.ts
     - [POST - /login](#login-de-usu%C3%A1rio)
 - [Contacts]
     - [POST - /contacts](#criar-contato)
-    - [GET - /contacts](#listar-todos-os-contatos-do-usu%C3%A1rio)
+    - [GET - /contacts](#listar-contatos)
     - [GET - /contacts/:contact_id](#listar-um-contato-pelo-id)
     - [PATCH - /contacts/:contact_id](#atualizar-contato)
     - [DELETE - /contacts/:contact_id](#deletar-contato)
@@ -208,7 +208,7 @@ Content-type: application/json
 {
 	"name": "Luan rodrigues carlos",
 	"email": "luan_rodrigues_carlos1@mail.com",
-	"password": "12345"
+	"cell_phone": "21 981529500"
 }
 ```
 
@@ -222,7 +222,7 @@ Content-type: application/json
 	"id": "b6caa420-9857-402d-b6dd-2bc45456506c",
 	"name": "Luan rodrigues carlos",
 	"email": "luan_rodrigues_carlos1@mail.com",
-	"cell_phone": "21 981528060",
+	"cell_phone": "21 981529500",
 	"profile_picture": null,
 	"created_at": "2023-03-28T00:25:54.972Z",
 	"updated_at": "2023-03-28T00:39:43.170Z",
@@ -230,6 +230,9 @@ Content-type: application/json
 	"is_active": true
 }
 ```
+
+### Observações:
+Nessa rota só é possivel alterar os campos “name”, “email” e “cell_phone”, caso seja passado qualquer outro campo será ignorado pela requisição
 
 ### Possíveis Erros:
 | Código do Erro | Descrição |
@@ -401,7 +404,7 @@ Caso o E-mail e Telefone do contato que está sendo criado seja o mesmo de algum
 
 ---
 
-### **Listar todos os contatos do usuário**
+### **Listar contatos**
 ### `/contacts`
 
 ### Exemplo de Request:
@@ -446,6 +449,41 @@ Vazio
 ]
 ```
 
+### Observações:
+Nessa rota é possível utilizar o Query Params “search” para que a listagem de contatos seja filtrada e essa pesquisa usando query Params é feita em todos os campos dos contatos
+
+### Exemplo de Request com Query Params:
+```
+GET /contacts?search=dentista
+Authorization: Bearer {token}
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+
+```json
+[
+	{
+		"id": "b41579a7-3841-4ca3-83ac-8bfd6d82af6b",
+		"name": "Lucas silva",
+		"description": "Dentista",
+		"email": "lucas_csilva@mail.com",
+		"cell_phone": "21 981528073",
+		"profile_picture": null,
+		"created_at": "2023-03-28T01:13:04.154Z",
+		"updated_at": "2023-03-28T01:13:04.171Z"
+	}
+]
+```
+
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
@@ -457,7 +495,7 @@ Vazio
 ### `/contacts/{id do contato}`
 
 ### Exemplo de Request:
-```
+
 GET /contacts/b41579a7-3841-4ca3-83ac-8bfd6d82af6b
 Authorization: Bearer {token}
 Content-type: application/json
