@@ -495,7 +495,7 @@ Vazio
 ### `/contacts/{id do contato}`
 
 ### Exemplo de Request:
-
+```
 GET /contacts/b41579a7-3841-4ca3-83ac-8bfd6d82af6b
 Authorization: Bearer {token}
 Content-type: application/json
