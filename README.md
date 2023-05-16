@@ -1,6 +1,6 @@
 # contact-list-api
 
-API desenvolvida para auxiliar na organização de seus contatos, que facilita o usuário a listar, criar e editar contatos
+API desenvolvida para auxiliar na organização de seus contatos, que facilita o usuário a listar, criar, editar e excluir contatos
 
 ## Tabela de Conteúdos
 
