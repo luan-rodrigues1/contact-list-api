@@ -1,6 +1,6 @@
 # contact-list-api
 
-API desenvolvida para auxiliar na organização de suas tarefas diárias
+API desenvolvida para auxiliar na organização de suas tarefas diárias, que facilita o usuário a listar, criar e editar contatos
 
 ## Tabela de Conteúdos
 
