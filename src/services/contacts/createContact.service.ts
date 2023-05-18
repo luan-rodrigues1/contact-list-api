@@ -26,11 +26,11 @@ const createContactService = async (payload: ICreateContact, userId: string) => 
     const registeredUserPhone = await userRepo.findOneBy({cell_phone: payload.cell_phone})
 
     const searchUser = await userRepo.findOneBy({id: userId})
-    const contact = contactRepo.create(payload)
+    const contact = contactRepo.create({...payload, user: searchUser!})
     await contactRepo.save(contact)
 
     if (registeredUserEmail?.id === registeredUserPhone?.id) {
-        await contactRepo.update(contact.id, {profile_picture: registeredUserEmail?.profile_picture, user: searchUser!})
+        await contactRepo.update(contact.id, {profile_picture: registeredUserEmail?.profile_picture})
         const contactUpdatePhoto = await contactRepo.findOneBy({id: contact.id})
         const contactValidation = returnContactSchema.parse(contactUpdatePhoto)
 
