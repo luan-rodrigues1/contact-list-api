@@ -116,7 +116,7 @@ Content-type: application/json
 {
 	"name": "Luan rodrigues",
 	"email": "luan_rodrigues1@mail.com",
-	"cell_phone": "21 981528060",
+	"cell_phone": "(21) 98152-8060",
 	"password": "1234"
 }
 ```
@@ -131,7 +131,7 @@ Content-type: application/json
 	"id": "b6caa420-9857-402d-b6dd-2bc45456506c",
 	"name": "Luan rodrigues",
 	"email": "luan_rodrigues1@mail.com",
-	"cell_phone": "21 981528060",
+	"cell_phone": "(21) 98152-8060",
 	"profile_picture": null,
 	"created_at": "2023-03-28T00:25:54.972Z",
 	"updated_at": "2023-03-28T00:25:54.972Z",
@@ -139,6 +139,10 @@ Content-type: application/json
 	"is_active": true
 }
 ```
+
+### Observações:
+No campo “cell_phone” é necessário usar esse formato Ex: (99) 99999-9999
+
 
 ### Possíveis Erros:
 | Código do Erro | Descrição |
@@ -173,7 +177,7 @@ Vazio
 	"id": "b6caa420-9857-402d-b6dd-2bc45456506c",
 	"name": "Luan rodrigues",
 	"email": "luan_rodrigues1@mail.com",
-	"cell_phone": "21 981528060",
+	"cell_phone": "(21) 98152-8060",
 	"profile_picture": null,
 	"created_at": "2023-03-28T00:25:54.972Z",
 	"updated_at": "2023-03-28T00:25:54.972Z",
@@ -208,7 +212,7 @@ Content-type: application/json
 {
 	"name": "Luan rodrigues carlos",
 	"email": "luan_rodrigues_carlos1@mail.com",
-	"cell_phone": "21 981529500"
+	"cell_phone": "(21) 98152-9500"
 }
 ```
 
@@ -222,7 +226,7 @@ Content-type: application/json
 	"id": "b6caa420-9857-402d-b6dd-2bc45456506c",
 	"name": "Luan rodrigues carlos",
 	"email": "luan_rodrigues_carlos1@mail.com",
-	"cell_phone": "21 981529500",
+	"cell_phone": "(21) 98152-9500",
 	"profile_picture": null,
 	"created_at": "2023-03-28T00:25:54.972Z",
 	"updated_at": "2023-03-28T00:39:43.170Z",
@@ -298,7 +302,7 @@ avatar: <Arquivo de imagem>
 	"id": "b6caa420-9857-402d-b6dd-2bc45456506c",
 	"name": "Luan rodrigues carlos",
 	"email": "luan_rodrigues_carlos1@mail.com",
-	"cell_phone": "21 981528060",
+	"cell_phone": "(21) 98152-8060",
 	"profile_picture": "1679964752241_perfil.jpeg",
 	"created_at": "2023-03-28T00:25:54.972Z",
 	"updated_at": "2023-03-28T00:52:32.323Z",
@@ -370,7 +374,7 @@ Content-type: application/json
 {
 	"name": "Lucas silva",
 	"email": "lucas_csilva@mail.com",
-	"cell_phone": "21 981528073",
+	"cell_phone": "(21) 98152-8073",
 	"description": "Dentista"
 }
 ```
@@ -386,7 +390,7 @@ Content-type: application/json
 	"name": "Lucas silva",
 	"description": "Dentista",
 	"email": "lucas_csilva@mail.com",
-	"cell_phone": "21 981528073",
+	"cell_phone": "(21) 98152-8073",
 	"profile_picture": null,
 	"created_at": "2023-03-28T01:13:04.154Z",
 	"updated_at": "2023-03-28T01:13:04.154Z"
@@ -431,7 +435,7 @@ Vazio
 		"name": "Lucas silva",
 		"description": "Dentista",
 		"email": "lucas_csilva@mail.com",
-		"cell_phone": "21 981528073",
+		"cell_phone": "(21) 98152-8073",
 		"profile_picture": null,
 		"created_at": "2023-03-28T01:13:04.154Z",
 		"updated_at": "2023-03-28T01:13:04.171Z"
@@ -441,7 +445,7 @@ Vazio
 		"name": "Levi carlos",
 		"description": "Primo",
 		"email": "levi_carlos@mail.com",
-		"cell_phone": "21 981528072",
+		"cell_phone": "(21) 98152-8072",
 		"profile_picture": null,
 		"created_at": "2023-03-28T01:06:28.378Z",
 		"updated_at": "2023-03-28T01:06:28.396Z"
@@ -476,7 +480,7 @@ Vazio
 		"name": "Lucas silva",
 		"description": "Dentista",
 		"email": "lucas_csilva@mail.com",
-		"cell_phone": "21 981528073",
+		"cell_phone": "(21) 98152-8073",
 		"profile_picture": null,
 		"created_at": "2023-03-28T01:13:04.154Z",
 		"updated_at": "2023-03-28T01:13:04.171Z"
@@ -517,7 +521,7 @@ Vazio
 	"name": "Lucas silva",
 	"description": "Dentista",
 	"email": "lucas_csilva@mail.com",
-	"cell_phone": "21 981528073",
+	"cell_phone": "(21) 98152-8073",
 	"profile_picture": null,
 	"created_at": "2023-03-28T01:13:04.154Z",
 	"updated_at": "2023-03-28T01:13:04.171Z"
@@ -548,7 +552,7 @@ Content-type: application/json
 {
 	"name": "Dr Lucas Silva",
 	"email": "luanteste9@mail.com",
-	"cell_phone": "21 981528074",
+	"cell_phone": "(21) 98152-8074",
 	"description": "Médico"
 }
 ```
@@ -564,7 +568,7 @@ Content-type: application/json
 	"name": "Dr Lucas Silva",
 	"description": "Médico",
 	"email": "luanteste9@mail.com",
-	"cell_phone": "21 981528074",
+	"cell_phone": "(21) 98152-8074",
 	"profile_picture": null,
 	"created_at": "2023-03-28T01:13:04.154Z",
 	"updated_at": "2023-03-28T12:44:22.243Z"
