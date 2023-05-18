@@ -1,11 +1,14 @@
 import { z } from "zod"
 import { contactSchema, returnContactSchema } from "./contact.schema"
-import { hashSync } from "bcryptjs"
+
+const phoneRegExp = /^\(\d{2}\) \d{5}-\d{4}$/;
 
 const createUserSchema = z.object({
     name: z.string().min(3).max(50),
     email: z.string().email(),
-    cell_phone: z.string(),
+    cell_phone: z.string().refine((value) => phoneRegExp.test(value), {
+        message: 'Invalid phone format',
+    }),
     password: z.string()
 })
 
@@ -32,4 +35,4 @@ const loginUserSchema = z.object({
     password: z.string()
 })
 
-export {createUserSchema, returnUserSchema, updateUserSchema, loginUserSchema, returnUserContactsSchema}
+export {createUserSchema, returnUserSchema, updateUserSchema, loginUserSchema, returnUserContactsSchema, phoneRegExp}
